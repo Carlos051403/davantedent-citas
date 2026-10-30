@@ -1,0 +1,158 @@
+/* Variables de color para mantener coherencia corporativa */
+:root {
+    --primary-blue: #004080;
+    --light-bg: #f4f7f6;
+    --border-color: #cccccc;
+    --error-color: #d9534f;
+}
+
+body {
+    font-family:'Segoe UI', Tahoma, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg);
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Cabecera y pie de página */
+header, footer {
+    background-color: var(--primary-blue);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+main { 
+    flex: 1; /*Esto para empujar el pie de pagina hacia abajo*/
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto; /*Para centrar el contenido en pantallas grandes*/
+    width: 100%;
+    box-sizing: border-box;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+h2 {
+    color: var(--primary-blue);
+    border-bottom: 2px solid var(--primary-blue);
+    padding-bottom: 0.5rem;
+}
+
+/* Estilos del formulario */
+fieldset {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+legend {
+    font-weight: bold;
+    color: var(--primary-blue);
+    background-color: white;
+    padding: 0 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Alineación en fila para fecha y hora */
+.fila-flexible {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.fila-flexible {
+    flex: 1;
+}
+
+.fila-flexible {
+    margin-top: 0;
+}
+
+/* Botones */
+button {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #00264d;
+}
+
+/*Estilos de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0, 1);
+}
+
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Clases dinamicas para JS */
+.error-input {
+    border:  2px solid var(--error-color) !important;
+    background-color: #fff0f0;
+}
+
+.btn-eliminar {
+    background-color: var(--error-color);
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.btn-modificar {
+    background-color: #f0ad4e;
+    padding: 6px 12px;
+    font-size: 14px;
+    margin-right: 5px;
+}

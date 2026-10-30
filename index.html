@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DavanteDent - Gestión de Citas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--Cabecera-->
+    <header>
+        <h1>DavanteDent</h1>
+        <!-- Espacio reservado para el logo -->
+    </header>
+
+    <main>
+        <!-- Sección del Formulario -->
+        <section id=" seccion-formulario">
+            <h2>Gestión de Citas</h2>
+            <from id="formulario-cita">
+                <!-- Este es identificador oculto para las modificaciones -->
+                <input type="hidden" id="cita-id" name="cita-id">
+
+                <fieldset> 
+                    <legend>Datos del paciente</legend>
+                
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos" required>
+                    
+                    <!-- Contenedor genérico para 3 columnas -->
+                    <div class="fila-flexible">
+                        <div class="columna">
+                            <label for="dni">DNI:</label>
+                            <input type="text" id="dni" name="dni" required>
+                        </div>
+                        <div class="columna">
+                            <label for="telefono">Teléfono:</label>
+                            <input type="tel" id="telefono" name="telefono" required>
+                        </div>
+                        <div class="columna">
+                            <label for="fecha-nac">Fecha de Nacimiento:</label>
+                            <input type="date" id="fecha-nac" name="fecha-nac" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Datos de la Cita</legend>
+                    <!-- Campos para fecha y hora separados, con contenedor flex box -->
+                     <div class="fila-flexible">
+                        <div class="columna">
+                            <label for="fecha">Día, Mes, Año:</label>
+                            <input type="date" id="fecha" name="fecha" required>
+                        </div>
+                        <div class="columna">
+                            <label for="hora">Hora y Minuto</label>
+                            <input type="time" id="hora" name="hora" required>
+                        </div>
+                     </div>
+
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" name="observaciones"></textarea>
+                </fieldset>
+
+                <button type="submit" id="btn-guardar">Guardar Cita</button>
+            </from>
+        </section>
+
+        <!-- Sección de la Tabla -->
+         <section id="seccion-tabla">
+            <h2>Citas Programadas</h2>
+            <table id="tabla-citas" border="1">
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Fecha y Hora</th>
+                        <th>Paciente</th>
+                        <th>DNI</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo-tabla">
+                    <tr id="fila-vacia">
+                        <td colspan="6" style="text-align: center;">dato vacío</td>
+                    </tr>
+                </tbody>
+            </table>
+         </section>
+    </main>
+
+    <!-- Pie de página -->
+     <footer>
+        <p>Contacto Clinica: 900 000 000 | info@DavanteDent.com</p>
+     </footer>
+
+     <script src="app.js"></script>
+</body>
+</html>
