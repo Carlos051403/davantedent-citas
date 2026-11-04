@@ -17,8 +17,11 @@ const formulario = document.getElementById("formulario-cita");
 const cuerpoTabla = document.getElementById("cuerpo-tabla");
 const filaVacia = document.getElementById("fila-vacia");
 
-// Con este Array global almacenamos las citas en la memoria de la aplicación
-let listaCitas = [];
+// Recuperamos las citas guardadas, o creamos un array vacío si es la primera vez
+let listaCitas = JSON.parse(localStorage.getItem("citasDavanteDent")) || [];
+
+// Pintamos la tabla nada más abrir la página
+renderizarTabla();
 
 //Interceptamos el evento del envio del formulario
 formulario.addEventListener("submit", function(evento) {
@@ -53,11 +56,24 @@ formulario.addEventListener("submit", function(evento) {
     // Si todo es correcto creamos el objeto cita
     const nuevaCita = new Cita(nombre, apellidos, dni, telefono, fechaNacimiento, fecha, hora, observaciones);
     
-    // Guardamos el objeto recien creado en nuestra lista Array
-    listaCitas.push(nuevaCita);
+    // Leemos si estamos en modo edición o creación
+    const editIndex = document.getElementById("cita-id").value;
+
+    if (editIndex === "") {
+        // Si está vacío, es un registro nuevo
+        listaCitas.push(nuevaCita);
+    } else {
+        // Si tiene un número, sobrescribimos el paciente en esa posición exacta
+        listaCitas[editIndex] = nuevaCita;
+        
+        // Reseteamos el sistema para el próximo cliente
+        document.getElementById("cita-id").value = "";
+        document.getElementById("btn-guardar").textContent = "Guardar Cita";
+    }
 
     // Se llama a la función que dibujara la tabla 
     renderizarTabla();
+    guardarEnMemoria();
 
     // Con esto se limpia el formulario para el proximo cliente
     formulario.reset();
@@ -108,11 +124,49 @@ function renderizarTabla() {
             <td style="text-align: center; padding: 10px;">${cita.dni}</td>
             <td style="text-align: center; padding: 10px;">${cita.telefono}</td>
             <td style="text-align: center; padding: 10px;">
-                <button class="btn-editar" style="cursor:pointer; margin-right:5px;">Editar</button>
-                <button class="btn-borrar" style="cursor:pointer; color:red;">Borrar</button>
+                <button class="btn-editar" style="cursor:pointer; margin-right:5px;" onclick="cargarCita(${index})">Editar</button>
+                <button class="btn-borrar" style="cursor:pointer; color:red;" onclick="borrarCita(${index})">Borrar</button>
             </td>
         `;
         
         cuerpoTabla.appendChild(fila);
     });
 }
+
+//Funcion para eliminar paciente de la lista
+function borrarCita(index) {
+    // Metodo splice dentro del array en la posicion (index) y elimmina 1 elemento
+    listaCitas.splice(index, 1);
+
+    // se redibuja la tabla al tener un paciente menos
+    renderizarTabla();
+    guardarEnMemoria();
+}
+
+// Funcion de rellenar el formulario
+function cargarCita(index) {
+    const cita = listaCitas[index];
+
+
+    // Volcamos los datos en las cajas de texto
+    document.getElementById("nombre").value = cita.nombre;
+    document.getElementById("apellidos").value = cita.apellidos;
+    document.getElementById("dni").value = cita.dni;
+    document.getElementById("telefono").value = cita.telefono;
+    document.getElementById("fecha-nac").value = cita.fechaNacimiento;
+    document.getElementById("fecha").value = cita.fecha;
+    document.getElementById("hora").value = cita.hora;
+    document.getElementById("observaciones").value = cita.observaciones;
+
+    // se guarda la posicion en el input oculto para saber a quien estamos editando
+    document.getElementById("cita-id").value = index;
+
+    // Cambiamos el texto del botón principal para dar feedback visual
+    document.getElementById("btn-guardar").textContent = "Actualizar Cita";
+}
+
+// Función para que persista los datos en el navegador
+function guardarEnMemoria() {
+    localStorage.setItem("citasDavanteDent", JSON.stringify(listaCitas));
+}
+
