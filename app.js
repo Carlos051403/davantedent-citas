@@ -100,23 +100,26 @@ function limpiarErrores() {
 
 // Funcion para dibujar las citas en la tabla HTML
 function renderizarTabla() {
-    // 1. Limpieza segura: borramos solo las filas antiguas sin romper la estructura base del HTML
+    // 1. Limpiamos las filas antiguas de pacientes
     const filasAntiguas = cuerpoTabla.querySelectorAll(".fila-paciente");
     filasAntiguas.forEach(function(fila) {
         fila.remove();
     });
 
-    // 2. Ocultamos el mensaje de "dato vacío"
-    if (listaCitas.length > 0 && filaVacia) {
-        filaVacia.style.display = "none";
+    // 2. Si la lista está vacía, mostramos la fila con el texto exacto requerido
+    if (listaCitas.length === 0) {
+        const filaVacia = document.createElement("tr");
+        filaVacia.classList.add("fila-paciente");
+        filaVacia.innerHTML = `<td colspan="6" style="text-align: center; padding: 15px; color: #666;">dato vacío</td>`;
+        cuerpoTabla.appendChild(filaVacia);
+        return;
     }
 
-    // 3. Dibujamos cada cita alineada con tus encabezados azules
+    // 3. Si hay citas, dibujamos cada paciente alineado con sus columnas
     listaCitas.forEach(function(cita, index) {
         const fila = document.createElement("tr");
-        fila.classList.add("fila-paciente"); // Etiqueta clave para que la limpieza segura funcione
-        
-        // 4. Inyectamos los datos en 5 columnas exactas para que no se rompa tu diseño
+        fila.classList.add("fila-paciente");
+
         fila.innerHTML = `
             <td style="text-align: center; padding: 10px;">${index + 1}</td>
             <td style="text-align: center; padding: 10px;">${cita.fecha} <br> ${cita.hora}</td>
@@ -124,11 +127,11 @@ function renderizarTabla() {
             <td style="text-align: center; padding: 10px;">${cita.dni}</td>
             <td style="text-align: center; padding: 10px;">${cita.telefono}</td>
             <td style="text-align: center; padding: 10px;">
-                <button class="btn-editar" style="cursor:pointer; margin-right:5px;" onclick="cargarCita(${index})">Editar</button>
-                <button class="btn-borrar" style="cursor:pointer; color:red;" onclick="borrarCita(${index})">Borrar</button>
+                <button type="button" class="btn-editar" style="cursor:pointer; margin-right:5px;" onclick="cargarCita(${index})">Editar</button>
+                <button type="button" class="btn-borrar" style="cursor:pointer; color:red;" onclick="borrarCita(${index})">Borrar</button>
             </td>
         `;
-        
+
         cuerpoTabla.appendChild(fila);
     });
 }
